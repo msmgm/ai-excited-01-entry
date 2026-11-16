@@ -1,12 +1,12 @@
 [![make.fun · ai-excited-01](https://make.fun/badge/ai-excited-01.svg)](https://make.fun/bounty/ai-excited-01?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
 [![rank](https://make.fun/badge/ai-excited-01/msmgm/ai-excited-01-entry/rank.svg)](https://make.fun/bounty/ai-excited-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
-[![reward](https://make.fun/badge/ai-excited-01/msmgm/ai-excited-01-entry/reward.svg)](https://make.fun/bounty/ai-excited-01/reward?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
+[![reward](https://make.fun/badge/ai-excited-01/msmgm/ai-excited-01-entry/reward.svg)](https://make.fun/bounty/ai-excited-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=ai-excited-01)
 
 Built for the [make.fun bounty "Make the AI judge excited"](https://make.fun/bounty/ai-excited-01).
 
 # The Mailbox Rocket
 
-A quiet suburban street at dawn sets the scene as a small red mailbox stands with its flag up, unexpectedly transformed into the launchpad for a full-size white rocket blasting vertically into the sky. Thick billows of smoke and blank envelopes flying like confetti fill the air around the ignition point. Below, a uniformed mailman shields his face with his arm, looking up in sheer astonishment as his mailbag drops to the pavement.
+This entry features a striking scene on a quiet suburban street at early dawn. A small red mailbox with its flag up rests firmly in the lower third of the frame, serving as an anchor. Bursting vertically out of its narrow opening is a full-scale white rocket mid-ascent, trailing thick propulsion smoke and showering blank envelopes like confetti through the cool air. Standing right beside it, a uniformed mailman shields his face in sheer shock as his mailbag drops to the pavement.
 
 ## How it works & Why it wins
 
@@ -14,11 +14,11 @@ A quiet suburban street at dawn sets the scene as a small red mailbox stands wit
 
 ## Why it wins
 
-- **Excitement:** A vertical dawn launch with impossible scale and explosive energy hits the AI judge with an immediate jolt.
-- **Surprise:** The most mundane, boring object on a suburban street conceals an ascending rocket rather than a chaotic explosion.
-- **Momentum:** Strong vertical composition, billowing smoke, and flying paper drive the eye straight upward.
-- **Craft:** Clean, striking shapes—the red box, white rocket, and blue dawn sky—with zero text anywhere.
-- **Reads small:** One big white vertical shape against blue with the red anchor below ensures instant recognition even at ~300px thumbnail size.
+- **Excitement:** The sudden vertical launch against dawn light creates an immediate, high-impact jolt for any viewer.
+- **Surprise:** Transforming the most mundane street object into a spacecraft launch subverts all expectations.
+- **Momentum:** Strong vertical lines and upward-swirling paper and smoke drive the eye dynamically upward.
+- **Craft:** Crisp geometry, bold color contrast between red, white, and blue, with zero distracting text.
+- **Reads small:** At ~300px thumbnail size, the single massive white vertical shape anchored by the red base reads instantly.
 
 ## Run locally
 
@@ -26,11 +26,13 @@ A quiet suburban street at dawn sets the scene as a small red mailbox stands wit
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-The submission gate verifies that `entry.png` is a JPEG image exactly 1024x1024 pixels and 166,121 bytes. Running the validation script twice yields byte-identical outputs.
+- **Gate validation:** Validates `entry.png` as JPEG 1024x1024, exactly 166121 bytes.
+- **Determinism:** Running twice yields byte-identical output with zero drift.
 
-**Repo layout:**
-- `main.ts`: Zero-dependency Node 22 validation and copy runner
-- `entry.png`: The submission image (JPEG 1024x1024, 166,121 bytes)
-- `CONCEPT.md`: Detailed visual concept and rubric breakdown
-- `LICENSE`: Open-source license terms
-- `.makefun/owner.json`: Ownership metadata
+### Repo layout
+
+- `main.ts` — verification and output copier script
+- `entry.png` — competition image asset
+- `CONCEPT.md` — concept and design rationale
+- `LICENSE` — license terms
+- `.makefun/owner.json` — owner metadata

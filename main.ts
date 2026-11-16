@@ -1,22 +1,24 @@
 /**
  * make.fun ai-excited-01 Entry: The Mailbox Rocket
  *
- * Program overview:
- * - Writes a single verified image to the output directory as entry.png.
- * - Carries entry.png: a white rocket blasting vertically out of a small red
- *   mailbox at dawn, letters flying like confetti, a mailman looking up in shock.
- * - Image specs: JPEG bytes, 1024x1024 dimensions, 166,121 bytes.
+ * This program writes one canonical image to the output destination:
+ * a white rocket blasting vertically out of a small red mailbox at dawn,
+ * letters flying like confetti, with a mailman looking up in shock.
+ * 
+ * The image asset is held directly in this repository as entry.png
+ * (JPEG format, 1024x1024 dimensions, 166121 bytes) and is copied
+ * byte-for-byte after rigorous gate validation.
  *
- * Gate validation limits:
- * - Format: PNG or JPEG detected via magic bytes.
- * - Size: <= 1 MiB (1,048,576 bytes).
- * - Dimensions: <= 1024x1024 pixels.
+ * Gate Limits & Validation:
+ * - Format: PNG or JPEG verified by magic bytes.
+ * - Max File Size: <= 1 MiB (1,048,576 bytes).
+ * - Max Dimensions: <= 1024x1024 pixels.
  *
- * Determinism & environment:
- * - Byte-identical output every run.
- * - No network access, no randomness, standard library only.
+ * Determinism & Design:
+ * - 100% deterministic (byte-identical every run).
+ * - No external network calls, no randomness, standard library only.
  *
- * Local execution:
+ * Local Execution:
  *   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
  */
 
@@ -50,8 +52,7 @@ function parseDimensions(buffer: Buffer, format: 'png' | 'jpeg'): { width: numbe
 }
 
 /**
- * Detects whether the buffer is PNG or JPEG based on magic bytes.
- * Throws if the buffer is too short or format is unrecognized.
+ * Detects image format ('png' or 'jpeg') from magic bytes.
  */
 function detectFormat(buffer: Buffer): 'png' | 'jpeg' {
   if (buffer.length < 4) throw new Error('Image file is too short');
@@ -81,41 +82,44 @@ function resolveImagePath(): string {
 }
 
 /**
- * Verifies that the destination file is byte-identical to the source file.
- * Throws an error if contents differ.
- */
-function verifyCopy(sourcePath: string, destPath: string): void {
-  const copied = readFileSync(destPath);
-  const original = readFileSync(sourcePath);
-  if (!copied.equals(original)) throw new Error('Copy verification failed: output bytes differ from source');
-}
-
-/**
- * Resolves the output directory path.
- * Reads MAKEFUN_OUTPUT_DIR if set (useful for local runs), or defaults to '/output' (used in the grader container).
+ * Resolves the target output directory.
+ * Reads MAKEFUN_OUTPUT_DIR environment variable (used for local runs)
+ * or defaults to '/output' (used in the grader container).
  */
 function resolveOutputDir(): string {
   return resolve(process.env.MAKEFUN_OUTPUT_DIR ?? '/output');
 }
 
 /**
- * Main entry point: validates image, resolves output directory, copies file, and verifies byte-identical output.
+ * Verifies that the destination file matches the source file byte-for-byte.
+ * Throws an error if the files differ.
+ */
+function verifyCopy(sourcePath: string, destPath: string): void {
+  const copied = readFileSync(destPath);
+  const original = readFileSync(sourcePath);
+  if (!copied.equals(original)) {
+    throw new Error('Copy verification failed: output bytes differ from source');
+  }
+}
+
+/**
+ * Executes the validation, copy, and verification pipeline.
  */
 function main(): void {
-  // Validate
+  // 1. Validate source image against gate limits
   const imagePath = resolveImagePath();
   const info = validateImage(imagePath);
   console.log(`[make.fun] Image validated: ${info.format.toUpperCase()} ${info.size} bytes ${info.width}x${info.height}`);
 
-  // Resolve out dir
+  // 2. Resolve output directory and ensure it exists
   const outDir = resolveOutputDir();
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
   const destPath = join(outDir, 'entry.png');
 
-  // Copy
+  // 3. Copy image byte-for-byte to destination
   copyFileSync(imagePath, destPath);
 
-  // Verify
+  // 4. Verify copied output matches source exactly
   verifyCopy(imagePath, destPath);
   console.log(`[make.fun] Copied ${info.size} bytes to ${destPath} (byte-identical)`);
 }
